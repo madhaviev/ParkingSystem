@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Angularjs Parking System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+</head>
+
+<body ng-app="parkingApp">
+	
+	<div ng-include='"resources/templates/header.html"'></div>
+	<div ng-include='"resources/templates/sidenav.html"'></div>
+	<div id="section">
+		<div ng-view></div>
+	</div>	
+	<div ng-include='"resources/templates/footer.html"'></div>
+	
+</body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.5/angular-resource.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.4/angular-filter.js"></script>
+<script src="resources/scripts/app.js">	</script>
+<script src="resources/scripts/GarageInfoControllers.js">	</script>
+<script src="resources/scripts/VehicleBookingControllers.js">	</script>
+<script src="resources/scripts/QueryBookingControllers.js">	</script>
+<script src="resources/scripts/services.js">	</script>
+
+
+</html>

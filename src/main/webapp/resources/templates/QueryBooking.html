@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="resources/css/QueryBooking.css">
+
+<div class="container" ng-controller="QueryBookingController">
+ 	
+ <div><label>Enter the vehicleID to search booking </label> : <input type="search" ng-model="queryBookingVehicleId" name="searchVehicleId"/> 
+ <button type="button" name="searchBooking" ng-click="searchBooking()">Search Booking</button> </div>
+ <br/>
+ <div ng-show="emptySearchVehicleId" class="errorMsg"> Enter the vehicleId to search </div> 
+ <div ng-show="emptyQueryResult" class="errorMsg"> No Records found for the vehicleId</div>
+  <br/> 
+ <hr>
+ <div><button id="displayAllCurrentBookings" title="Display All Current Bookings" ng-click="displayAllCurrentBookings()">DisplayAllCurrentBookings</button> </div><br/>
+ <div>
+     <div class="tableContainer" >
+		<div class="tableRow">
+			<div class="tableColumnHeader"> vehicleId </div>
+			<div class="tableColumnHeader"> LevelNumber </div>
+			<div class="tableColumnHeader"> slotName </div>
+			<div class="tableColumnHeader"> BookingTime </div>
+			<div class="tableColumnHeader"> ReleaseTime </div>
+		</div>
+	
+	
+		<div class="tableRow" ng-repeat=" bookingInfo in queriedBookingInfo">
+			<div class="tableColumn">{{bookingInfo.vehicleId}} </div>
+			<div class="tableColumn">{{bookingInfo.slotObj.levelNumber}}</div>
+			<div class="tableColumn">{{bookingInfo.slotObj.slotName}}</div>
+			<div class="tableColumn">{{bookingInfo.bookingTime | date:'dd-MM-yy HH:mm '}} </div>
+			<div class="tableColumn">{{bookingInfo.releaseTime | date:'dd-MM-yy HH:mm' }} </div>
+			<button type="button" id="releaseBooking" ng-click="releaseBooking(bookingInfo)" >Release Booking</button>
+		</div>
+		
+			
+	 </div>
+	 
+	 
+ </div>
+ 
+</div>

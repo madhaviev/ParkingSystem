@@ -1,0 +1,16 @@
+CREATE TABLE SLOTSINFO (
+
+	id NUMBER PRIMARY KEY,
+	slotname VARCHAR(50),
+	levelnumber NUMBER,
+	vehicletype VARCHAR(5)
+);
+
+CREATE TABLE BOOKINGINFO (
+	
+	id NUMBER PRIMARY KEY,
+	vehicleid VARCHAR(20),
+	slotid  NUMBER  REFERENCES SLOTSINFO(id),
+	bookingtime TIMESTAMP,
+	releasetime TIMESTAMP
+ );

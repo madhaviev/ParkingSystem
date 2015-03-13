@@ -1,0 +1,85 @@
+<link rel="stylesheet" type="text/css" href="resources/css/EditGarageInfo.css">
+
+<div id="container" ng-controller="EditGarageController">
+  
+		<div id="createLevelSection" class="createLevelSection" ng-controller="createLevelController">
+
+			<div ng-show="levelCreatedSuccesfully" class="successMsg" ng-model="createdLevel">Level {{createdLevel.levelNumber}} created with {{createdLevel.carSlotsCount}} car slots and {{createdLevel.bikeSlotsCount}} bike slots</div><br/>
+			<div ng-show="levelCreationFailed" class="errorMsg">Error occured while creating Level Please try again later.</div>
+	
+			<form id="createLevelForm" method="POST" ng-submit="submit()">
+	
+				<div class="editSection">
+					<div class="formLabel">LevelNumber  </div>
+					<div class="formField"><input type="number" id="levelNumber" class="formFieldBoxes" ng-model="levelNumber" name="levelNo" min="1" max="50" step="1" required></div>
+				</div>
+				<div class="editSection">
+					<div class="formLabel">Number of car slots </div> 
+					<div class="formField"><input type="number" id="carSlotsCount" class="formFieldBoxes"  ng-model="carSlotsCount" min="0" step="1" required> </div>
+				</div>
+				<div class="editSection">
+					<div class="formLabel">Number of Bike slots </div>
+					<div class="formField"><input type="number" id="bikeSlotsCount" class="formFieldBoxes" ng-model="bikeSlotsCount" min="0" step="1" required></div>
+				</div>
+				<div class="editSection">
+					<div class="formLabel"></div>
+					<div class="formField"><input type="submit"  class="formFieldBoxes" value="createLevel"></div> <br/>
+				</div>
+	 
+			</form>
+
+		</div>
+
+		<div id="levelSummary" class="levelSummarySection" ng-controller="levelSummaryController">
+		Level Summary <br/>
+			<div class="tableContainer">
+				<div class="tableRow">
+					<div class="tableColumnHeader"> LevelNo </div>
+					<div class="tableColumnHeader">CarSlotsCnt</div>
+					<div class="tableColumnHeader">BikeSlotsCnt</div>
+			
+				</div>
+		
+		
+				<div class="tableRow" ng-repeat="leveldetail in (levelDetails | orderBy:levelNumber)">
+					<div class="tableColumn">{{leveldetail.levelNumber}} </div>
+					<div class="tableColumn">{{leveldetail.carSlotsCount}} </div>
+					<div class="tableColumn">{{leveldetail.bikeSlotsCount}} </div>
+				</div>
+		
+			</div> <!-- End of Table container -->
+		</div> <!-- End of levelSummary Div -->
+	
+	<div id="slotSummary" class="slotSummarySection" ng-controller="slotSummaryController">
+		<div class="editSection">
+					<div class="formLabel"> Enter the Level Number to get slot summary </div>
+					<div class="formField"> <input type="number" id="lno" ng-model="lno" min="1" max="50" step="1" ng-Change="updateSlots()"/> </div>
+		</div> <br/>
+	
+		<div class="tableContainer">
+			<div class="tableRow">
+				<!-- <div class="tableColumnHeader"> SlotId </div> -->
+				<div class="tableColumnHeader">SlotName</div>
+				<div class="tableColumnHeader">LevelNumber</div>
+				<div class="tableColumnHeader">VehicleType</div>
+				<div class="tableColumnHeader">Availability</div>
+				<div class="tableColumnHeader">DeleteSlot</div>
+			</div>
+			
+			
+			<div class="tableRow" ng-repeat="slotdetail in slotDetails">
+				<!-- <div class="tableColumn">{{slotdetail.slotId}} </div> -->
+				<div class="tableColumn">{{slotdetail.slotName}}</div>
+				<div class="tableColumn">{{slotdetail.levelNumber}} </div>
+				<div class="tableColumn">{{slotdetail.vehicleType}}</div>
+				<div class="tableColumn">{{slotdetail.availability == true ? "Available" : "Booked"}}</div>
+				<div class="tableColumn" > 
+					<button type="button" id="deleteSlot" ng-click="deleteSlot(slotdetail.slotId)" ng-show="{{slotdetail.availability}}">Delete Slot</button>
+				</div> 
+			</div>
+			
+		</div>
+	</div>
+
+</div>
+

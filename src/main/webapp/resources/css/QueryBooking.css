@@ -1,0 +1,17 @@
+.tableContainer {
+	display: table;
+}
+.tableRow {
+	display: table-row;
+}
+.tableColumnHeader {
+	display: table-cell;
+	padding: 5px;
+	
+}
+.tableColumn {
+	display: table-cell;
+	padding: 5px;	
+	text-align: center;
+
+}

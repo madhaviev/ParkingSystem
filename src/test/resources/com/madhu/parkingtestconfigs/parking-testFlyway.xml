@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<beans:bean id="flywayClean" class="org.flywaydb.core.Flyway" init-method="clean">
+	 <beans:property name="dataSource" ref="dataSource"/>
+</beans:bean>
+
+<beans:bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate" depends-on="flywayClean">
+    <beans:property name="dataSource" ref="dataSource"/>
+    <beans:property name="initOnMigrate" value="true" />
+    <beans:property name="validateOnMigrate" value="false"/>
+	<beans:property name="locations">
+		<beans:list>
+				<beans:value>com/madhu/parkingdbscripts/</beans:value>
+			</beans:list>
+		</beans:property>
+	</beans:bean>
+</beans:beans>

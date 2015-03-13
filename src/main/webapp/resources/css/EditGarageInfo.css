@@ -1,0 +1,35 @@
+#container {
+	position:relative;
+	overflow:hidden;
+	width: 90%;
+	
+}
+
+.createLevelSection{
+	width:30%;
+	float:left;
+    padding:5px; 
+    position:relative;
+    //left:72%;
+    border:solid 1px #000000;
+    display:inline-block;
+}
+.levelSummarySection {
+	
+	width:66%;
+	position:relative;
+	left:1%;
+	padding:10px;
+	border:solid 1px #000000;
+	overflow-y: scroll;
+	display:inline-block;
+	height:213px;
+}
+.slotSummarySection {
+	width:auto;
+	clear:both;
+	padding:10px;
+	border:solid 1px #000000;
+	height: 230px;
+	overflow-y :scroll;
+}

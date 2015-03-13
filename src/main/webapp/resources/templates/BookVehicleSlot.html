@@ -1,0 +1,58 @@
+<link rel="stylesheet" type="text/css" href="resources/css/EditGarageInfo.css">
+<link rel="stylesheet" type="text/css" href="resources/css/EditVehicleBooking.css">
+<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+
+<div id="container" ng-controller="VehicleBookingController">
+ 
+ 	<div class="editSection">
+		<div class="formLabel"> VehicleType : </div>
+		<div class="formField">
+			<select id="vehicleType" ng-model="vehicleType" ng-change="getFreeSlots(vehicleType)">
+				 <option value="Car" ng-selected="true">Car</option>
+				 <option value="Bike">Bike</option>
+			</select> 
+		</div>
+	</div>
+
+	<div class="editSection">
+		<div class="formLabel"> LevelNumber : </div>
+		<div class="formField">
+			<select id="levelNumber" ng-model="selectedLevel" ng-change="renderSlots()">
+				 <option ng-repeat="(levelNo, value) in freeSlotsList | groupBy: 'levelNumber'" value="{{levelNo}}" >Level-{{levelNo}}</option>
+			</select> 
+		</div>
+	</div>
+<hr>
+<div>
+<label>Available Slots	:  </label>   <br/> <br/>
+
+	<div ng-hide=freeSlotsList class="errorMsg">No Free slots available for selected vehicle type</div>
+	
+	<div class="tableContainerVehicle" ng-show="freeSlotsListInSelectedLevel">
+				<div class="tableRow">
+				</div>
+				<div class="tableRow" ng-repeat="rowSlot in rowSlotsList">
+					<div class="tableColumn" ng-repeat="slotObj in rowSlot">
+ 						<input type="radio" name="{{slotObj.slotName}}" ng-model="$parent.$parent.selectedSlot" ng-value="{{slotObj.slotId}}" /> {{slotObj.slotName}}
+ 					</div>
+				</div>
+ 	</div>
+</div>
+<br/>
+<div class="editSection">
+		<div class="formLabel"> Enter VehicleId </div>
+		<div class="formField"> 
+			<input type="text" ng-model="vehicleId" name="vehicleId" placeholder="Enter the vehicleID" />   
+		</div> <br/>
+</div>
+
+<div ng-show="emptyVehicleId" class="errorMsg"> vehicleId cannot be empty. Enter the vehicleId to book slot <br/></div> 
+
+<div ng-show="emptySlotId" class="errorMsg"> No slot selected. Select any slot for booking </div>
+
+<br/><button type="button" name="bookSlot" value="BookSlot" ng-click="bookSlot()">BookSlot</button> <br/>
+
+<div ng-show="bookingAlreadyExists" class="errorMsg"> {{updatedBookingSlot.errorMsg}}</div> 
+
+
+</div>
