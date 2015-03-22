@@ -5,6 +5,7 @@ var app = angular
 			        'ngRoute',
 			        'ngResource',
 			        'angular.filter',
+			       // 'ui.bootstrap',
 			        'parkingServices',
 			        'GarageInfoControllers',
 			        'QueryBookingControllers',
@@ -33,9 +34,18 @@ app.config(function ($routeProvider, $locationProvider) {
 		})
 		.otherwise({
 			templateUrl: "resources/templates/DefaultMain.html"
-		});
+		});;
+		
 		
 
+});
+
+app.filter('startFrom', function() {
+	
+	return function(input, start) {
+		start = +start;
+		return input.slice(start);	
+	};
 });
 
 

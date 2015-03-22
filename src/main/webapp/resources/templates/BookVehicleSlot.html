@@ -1,8 +1,5 @@
-<link rel="stylesheet" type="text/css" href="resources/css/EditGarageInfo.css">
-<link rel="stylesheet" type="text/css" href="resources/css/EditVehicleBooking.css">
-<link rel="stylesheet" type="text/css" href="resources/css/main.css">
 
-<div id="container" ng-controller="VehicleBookingController">
+<div class="col-md-9 blockSection" ng-controller="VehicleBookingController">
  
  	<div class="editSection">
 		<div class="formLabel"> VehicleType : </div>
@@ -24,19 +21,21 @@
 	</div>
 <hr>
 <div>
-<label>Available Slots	:  </label>   <br/> <br/>
+<div class="formLabel">Available Slots	:  </div>   <br/> <br/>
 
 	<div ng-hide=freeSlotsList class="errorMsg">No Free slots available for selected vehicle type</div>
 	
-	<div class="tableContainerVehicle" ng-show="freeSlotsListInSelectedLevel">
-				<div class="tableRow">
-				</div>
-				<div class="tableRow" ng-repeat="rowSlot in rowSlotsList">
-					<div class="tableColumn" ng-repeat="slotObj in rowSlot">
- 						<input type="radio" name="{{slotObj.slotName}}" ng-model="$parent.$parent.selectedSlot" ng-value="{{slotObj.slotId}}" /> {{slotObj.slotName}}
- 					</div>
-				</div>
- 	</div>
+	<table class="table table-striped" ng-show="freeSlotsListInSelectedLevel">
+		<tr>
+		</tr>
+		<tr ng-repeat="rowSlot in rowSlotsList">	
+			<td ng-repeat="slotObj in rowSlot">
+ 				<input type="radio" name="{{slotObj.slotName}}" ng-model="$parent.$parent.selectedSlot" ng-value="{{slotObj.slotId}}" /> {{slotObj.slotName}}
+ 			</td>
+		</tr>
+	
+	</table>
+	
 </div>
 <br/>
 <div class="editSection">
@@ -50,7 +49,7 @@
 
 <div ng-show="emptySlotId" class="errorMsg"> No slot selected. Select any slot for booking </div>
 
-<br/><button type="button" name="bookSlot" value="BookSlot" ng-click="bookSlot()">BookSlot</button> <br/>
+<br/><button type="button" name="bookSlot" value="BookSlot" ng-click="bookSlot()">BookSlot</button> <br/> <br/>
 
 <div ng-show="bookingAlreadyExists" class="errorMsg"> {{updatedBookingSlot.errorMsg}}</div> 
 

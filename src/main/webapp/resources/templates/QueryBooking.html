@@ -1,39 +1,100 @@
-<link rel="stylesheet" type="text/css" href="resources/css/QueryBooking.css">
 
-<div class="container" ng-controller="QueryBookingController">
+<div class="col-md-12" ng-controller="QueryBookingController">
  	
- <div><label>Enter the vehicleID to search booking </label> : <input type="search" ng-model="queryBookingVehicleId" name="searchVehicleId"/> 
- <button type="button" name="searchBooking" ng-click="searchBooking()">Search Booking</button> </div>
- <br/>
- <div ng-show="emptySearchVehicleId" class="errorMsg"> Enter the vehicleId to search </div> 
- <div ng-show="emptyQueryResult" class="errorMsg"> No Records found for the vehicleId</div>
-  <br/> 
- <hr>
- <div><button id="displayAllCurrentBookings" title="Display All Current Bookings" ng-click="displayAllCurrentBookings()">DisplayAllCurrentBookings</button> </div><br/>
  <div>
-     <div class="tableContainer" >
-		<div class="tableRow">
-			<div class="tableColumnHeader"> vehicleId </div>
-			<div class="tableColumnHeader"> LevelNumber </div>
-			<div class="tableColumnHeader"> slotName </div>
-			<div class="tableColumnHeader"> BookingTime </div>
-			<div class="tableColumnHeader"> ReleaseTime </div>
-		</div>
-	
-	
-		<div class="tableRow" ng-repeat=" bookingInfo in queriedBookingInfo">
-			<div class="tableColumn">{{bookingInfo.vehicleId}} </div>
-			<div class="tableColumn">{{bookingInfo.slotObj.levelNumber}}</div>
-			<div class="tableColumn">{{bookingInfo.slotObj.slotName}}</div>
-			<div class="tableColumn">{{bookingInfo.bookingTime | date:'dd-MM-yy HH:mm '}} </div>
-			<div class="tableColumn">{{bookingInfo.releaseTime | date:'dd-MM-yy HH:mm' }} </div>
-			<button type="button" id="releaseBooking" ng-click="releaseBooking(bookingInfo)" >Release Booking</button>
-		</div>
-		
-			
-	 </div>
-	 
-	 
+ 	<div class="formLabel">Enter the vehicleID to search booking </div> : <input type="search" ng-model="filterVehicleId" name="searchVehicleId"/> 
  </div>
+ 
+ <hr>
+ <br/>
+ <div class="container">
+ 	<div class="row-fluid">
+ 		<div class="col-md-2">
+ 			<label>LevelNumber</label> <br/>
+ 			<div ng-repeat="levelNumber in totalLevels">
+ 				<input type="checkbox" class="filterOption" ng-model='levelNumberFilter.levelNumber' ng-change="registerFilter(levelNumber, 'levelNumberFilter')" >Level-{{levelNumber}}<br/>
+ 			</div>
+ 		</div>
+ 		<div class="col-md-2">
+ 			<label>VehicleType</label> <br/>
+ 			<input type="checkbox" class="filterOption" ng-model="vehicleTypeFilter.Car" ng-change="registerFilter('Car', 'vehicleTypeFilter')"> Car<br/>
+ 			<input type="checkbox" class="filterOption" ng-model="vehicleTypeFilter.Bike" ng-change="registerFilter('Bike', 'vehicleTypeFilter')"> Bike<br/>
+ 		</div>
+ 	</div>
+ </div>
+ <br/>
+ <div class="pull-right"><button id="displayAllCurrentBookings" title="Display All Current Bookings" ng-click="displayAllCurrentBookings()">DisplayAllCurrentBookings</button> </div>
+ <table class="table table-striped" >
+	<thead>
+		<tr>
+			<th> 
+			  <a href="" ng-click="orderByField='vehicleId';reverseSort=!reverseSort">
+				VehicleId 
+				<span ng-show="orderByField=='vehicleId'">
+					<span ng-show="!reverseSort">^</span>
+					<span ng-show="reverseSort">v</span>
+				</span>
+			  </a>
+			</th>
+			<th>
+			  <a href="" ng-click="orderByField='levelNumber';reverseSort=!reverseSort">
+				LevelNumber 
+				<span ng-show="orderByField=='levelNumber'">
+					<span ng-show="!reverseSort">^</span>
+					<span ng-show="reverseSort">v</span>
+				</span>
+			  </a>
+			</th>
+			<th>
+			  <a href="" ng-click="orderByField='slotName';reverseSort=!reverseSort">
+				SlotName 
+				<span ng-show="orderByField=='slotName'">
+					<span ng-show="!reverseSort">^</span>
+					<span ng-show="reverseSort">v</span>
+				</span>
+			  </a>
+			</th>
+			<th>
+			  <a href="" ng-click="orderByField='bookingTime';reverseSort=!reverseSort">
+				BookingTime 
+				<span ng-show="orderByField=='bookingTime'">
+					<span ng-show="!reverseSort">^</span>
+					<span ng-show="reverseSort">v</span>
+				</span>
+			  </a>
+			</th>
+			<th>Action</th>
+		</tr>
+		
+	<tbody>
+	
+		<tr ng-repeat="bookingInfo in displayBookingInfo | filter:{vehicleId:filterVehicleId} | orderBy:orderByField:reverseSort |startFrom:currentPage*pageSize | limitTo:pageSize">
+			<td class="tableColumn">{{bookingInfo.vehicleId}} </td>
+			<td class="tableColumn">{{bookingInfo.slotObj.levelNumber}}</td>
+			<td class="tableColumn">{{bookingInfo.slotObj.slotName}}</td>
+			<td class="tableColumn">{{bookingInfo.bookingTime | date:'dd-MM-yy HH:mm '}} </td>
+			<td>
+				<button type="button" id="releaseBooking" ng-click="releaseBooking(bookingInfo)" >Release Booking</button>
+			</td>
+		</tr>
+		
+	</tbody>  
+	
+	<tfoot>
+		<td colspan=6>
+			<div class="pull-right">	
+				<button ng-disabled="currentPage == 0" ng-click="updatePageCountDetails('Previous')">
+					Previous
+				</button>
+				{{startRecord}} - {{endRecord}} / {{displayBookingInfo.length}} 
+				<button ng-disabled="currentPage >= displayBookingInfo.length/pageSize-1" ng-click="updatePageCountDetails('Next')">
+					Next
+				</button>
+			</div>
+		</td>
+	</tfoot>
+	 
+</table> 
+
  
 </div>
